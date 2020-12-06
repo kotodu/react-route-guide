@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import InputConfig from "./components/InputConfig";
 import { PdfDisplay } from "./components/PdfDisplay";
+import { getBusroutePattern } from "./scripts/getDataFromOdpt";
+
+// 現在は暫定的に事業者を都営に、路線を王57に設定
+// TODO : OPERATORの選択や、定数の別ファイル化
+const OPERATOR = "odpt.Operator:Toei" as const;
+const ROUTE = "odpt.Busroute:Toei.Ou57" as const;
 
 /**
  * Appコンポーネント
@@ -31,7 +37,13 @@ const App: React.FC = () => {
             <hr></hr>
             <h2>設定</h2>
             {inputConfig}
-            <button type="button" className="btn btn-primary">
+            <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => {
+                    getBusroutePattern(OPERATOR, ROUTE, consumerKey);
+                }}
+            >
                 GetData
             </button>
         </aside>
