@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { OdptBusroutePattern } from "./@types/odpt";
 import InputConfig from "./components/InputConfig";
 import { PdfDisplay } from "./components/PdfDisplay";
 import { getBusroutePattern } from "./scripts/getDataFromOdpt";
@@ -23,6 +24,11 @@ const App: React.FC = () => {
      */
     const [consumerKey, setConsumerKey] = useState<string>("");
 
+    /**
+     * @var {OdptBusroutePattern[]} routePatterns
+     */
+    const [routePatterns, setPatterns] = useState<OdptBusroutePattern[]>();
+
     const inputConfig = (
         <InputConfig
             consumerKey={consumerKey}
@@ -41,7 +47,11 @@ const App: React.FC = () => {
                 type="button"
                 className="btn btn-primary"
                 onClick={() => {
-                    getBusroutePattern(OPERATOR, ROUTE, consumerKey);
+                    getBusroutePattern(OPERATOR, ROUTE, consumerKey).then(
+                        (routePatterns) => {
+                            setPatterns(routePatterns);
+                        }
+                    );
                 }}
             >
                 GetData
@@ -51,7 +61,11 @@ const App: React.FC = () => {
 
     const rightArea = (
         <main className="col-6">
-            <PdfDisplay />
+            {routePatterns !== undefined ? (
+                <PdfDisplay routePatterns={routePatterns} />
+            ) : (
+                <span>アクセスキーを入力してください</span>
+            )}
         </main>
     );
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { OdptBusroutePattern } from "../@types/odpt";
 
 // TODO : odptの型定義データ作成。既にあるなら探すこと
 // TODO : このあたりのクエリ付与処理を効率化したい
@@ -56,7 +57,7 @@ const getBusroutePattern = (
     return axios.get(path)
         .then(response => {
             console.log(response)
-            return response.data;
+            return response.data as OdptBusroutePattern[];
         });
 }
 

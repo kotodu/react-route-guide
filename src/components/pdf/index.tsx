@@ -13,6 +13,8 @@ import {
 // https://github.com/diegomura/react-pdf/issues/875
 // Nasuか源真ゴシックでないと出来ない、という情報すらある
 import GenShinNormal from "../../fonts/GenShinGothic-Normal.ttf";
+import { OdptBusroutePattern } from "../../@types/odpt";
+import RouteHeaders from "./routeHeader";
 
 /**
  * @summary 使用するフォントの定義
@@ -45,8 +47,12 @@ const styles = StyleSheet.create({
     },
 });
 
+type Props = {
+    routePatterns: OdptBusroutePattern[];
+};
+
 // PDFオブジェクトの作成
-const RouteGuide = () => (
+const RouteGuide = ({ routePatterns }: Props) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.section}>
@@ -55,6 +61,7 @@ const RouteGuide = () => (
             <View style={styles.section}>
                 <Text>Section #2</Text>
             </View>
+            <RouteHeaders routePatterns={routePatterns} />
         </Page>
     </Document>
 );
