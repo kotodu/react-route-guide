@@ -15,6 +15,7 @@ import {
 import GenShinNormal from "../../fonts/GenShinGothic-Normal.ttf";
 import { OdptBusroutePattern } from "../../@types/odpt";
 import RouteHeaders from "./routeHeader";
+import Stops from "./stops";
 
 /**
  * @summary 使用するフォントの定義
@@ -35,35 +36,59 @@ Font.register({
  */
 const styles = StyleSheet.create({
     page: {
-        flexDirection: "row",
+        // flexDirection: "row",
         backgroundColor: "#E4E4E4",
         fontFamily: "源真ゴシック",
         fontWeight: "normal",
+        lineHeight: 1,
+        fontSize: 20,
     },
     section: {
         margin: 10,
         padding: 10,
         flexGrow: 1,
     },
+    header: {
+        width: "100%",
+        textAlign: "center",
+        color: "white",
+        backgroundColor: "black",
+        fontSize: 20,
+        lineHeight: 1.2,
+    },
+    stops: {
+        marginHorizontal: 10,
+        width: "100%",
+    },
 });
 
 type Props = {
     routePatterns: OdptBusroutePattern[];
+    selectStopId: string;
 };
 
 // PDFオブジェクトの作成
-const RouteGuide = ({ routePatterns }: Props) => (
-    <Document>
-        <Page size="A4" style={styles.page}>
-            <View style={styles.section}>
-                <Text>お試し</Text>
-            </View>
-            <View style={styles.section}>
-                <Text>Section #2</Text>
-            </View>
-            <RouteHeaders routePatterns={routePatterns} />
-        </Page>
-    </Document>
-);
+const RouteGuide = ({ routePatterns, selectStopId }: Props) => {
+    const selectPattern = routePatterns?.[0];
+    const selectOrders = selectPattern["odpt:busstopPoleOrder"];
+    const selectOrder = selectOrders.find((order) => {
+        return order["odpt:busstopPole"] === selectStopId;
+    });
+    const selectIndex = selectOrder?.["odpt:index"] ?? 1;
+    const selectName = selectOrder?.["odpt:note"] ?? "";
+    const stopsView = (
+        <Stops stopOrders={selectOrders} selectIndex={selectIndex} />
+    );
+    return (
+        <Document>
+            <Page size="A4" style={styles.page} wrap={true}>
+                <Text style={styles.header}>
+                    運行系統図サンプル【{selectName} 】
+                </Text>
+                <View style={styles.stops}>{stopsView}</View>
+            </Page>
+        </Document>
+    );
+};
 
 export default RouteGuide;

@@ -5,15 +5,16 @@ import { OdptBusroutePattern } from "../@types/odpt";
 
 type Props = {
     routePatterns: OdptBusroutePattern[];
+    selectStop: string;
 };
 
 /**
  * RouteGuidePDFの出力
  */
-const PdfDisplay = ({ routePatterns }: Props) => {
+const PdfDisplay = ({ routePatterns, selectStop }: Props) => {
     return (
         <PDFViewer width="100%" height="100%">
-            <RouteGuide routePatterns={routePatterns} />
+            <RouteGuide routePatterns={routePatterns} selectStopId={selectStop} />
         </PDFViewer>
     );
 };

@@ -16,6 +16,7 @@ export interface OdptBusroutePattern {
 export interface OdptBusstopPoleOrder {
     "odpt:busstopPole": string;
     "odpt:index": number;
+    "odpt:note"?: string;
 }
 
 export interface OdptBusstopPole {
