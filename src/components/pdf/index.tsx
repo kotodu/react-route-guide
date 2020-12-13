@@ -77,7 +77,7 @@ const RouteGuide = ({ routePatterns, selectStopId }: Props) => {
     const selectIndex = selectOrder?.["odpt:index"] ?? 1;
     const selectName = selectOrder?.["odpt:note"] ?? "";
     const stopsView = (
-        <Stops stopOrders={selectOrders} selectIndex={selectIndex} />
+        <Stops routePatterns={routePatterns} selectStopId={selectStopId} />
     );
     return (
         <Document>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { OdptBusroutePattern } from "./@types/odpt";
 import InputConfig from "./components/InputConfig";
 import { PdfDisplay } from "./components/PdfDisplay";
-import StopOptions from "./components/StopOptions";
+import { StopOptions } from "./components/StopOptions";
 import { getBusroutePattern } from "./scripts/getDataFromOdpt";
 
 // 現在は暫定的に事業者を都営に、路線を王57に設定

@@ -10,10 +10,13 @@ type Props = {
 };
 
 /**
- * @summary 停留所を選択肢にしたselectを返す
- * @param param0
+ * @method getPolesFromRoutePatterns
+ * @param {OdptBusroutePattern[]} routePatterns
+ * @returns {Pole[]}
  */
-const StopOptions = ({ routePatterns, selectPoleId, setPole }: Props) => {
+const getPolesFromRoutePatterns = (
+    routePatterns: OdptBusroutePattern[]
+): Pole[] => {
     // すべての停留所を格納するMapを作る
     const poleMap = new Map<Pole["odpt:busstopPole"], Pole>();
     routePatterns.forEach((pattern) => {
@@ -28,6 +31,16 @@ const StopOptions = ({ routePatterns, selectPoleId, setPole }: Props) => {
         });
     });
     const poles = Array.from(poleMap.values());
+    return poles;
+};
+
+/**
+ * @summary 停留所を選択肢にしたselectを返す
+ * @param param0
+ */
+const StopOptions = ({ routePatterns, selectPoleId, setPole }: Props) => {
+    // routePatternsをもとにpoles配列を作成する
+    const poles = getPolesFromRoutePatterns(routePatterns);
 
     // poleのSetから選択肢を作成する
     const options = poles.map((pole) => {
@@ -54,4 +67,4 @@ const StopOptions = ({ routePatterns, selectPoleId, setPole }: Props) => {
     );
 };
 
-export default StopOptions;
+export { StopOptions, getPolesFromRoutePatterns };
