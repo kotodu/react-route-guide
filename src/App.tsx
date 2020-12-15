@@ -105,6 +105,9 @@ const App: React.FC = () => {
             {inputConfig}
             {getButton}
             {stopSelect}
+            <p>
+                (東京公共交通オープンデータチャレンジにおいて提供されているデータを利用)
+            </p>
         </aside>
     );
 
